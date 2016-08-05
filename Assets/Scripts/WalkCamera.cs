@@ -25,22 +25,31 @@ public class WalkCamera : MonoBehaviour
 	private Rigidbody rb;
 	private float distToGround;
 
+	private Transform cameraTransform;
+
 	void Start()
 	{
 
 		rb = GetComponent<Rigidbody> ();
 		distToGround = GetComponent<Collider>().bounds.extents.y;
 
+		cameraTransform = transform.FindChild("MainCamera");
 	}
 
 	void Update()
 	{
 
 		// Mouse input.
-		lastMouse = Input.mousePosition - lastMouse;
-		lastMouse = new Vector3(-lastMouse.y * camSens, lastMouse.x * camSens, 0);
-		lastMouse = new Vector3(transform.eulerAngles.x + lastMouse.x, transform.eulerAngles.y + lastMouse.y, 0);
-		transform.eulerAngles = lastMouse;
+		Vector3 mouseDiff = Input.mousePosition - lastMouse;
+		mouseDiff = new Vector3(mouseDiff.x * camSens, mouseDiff.y * camSens, 0);
+		Vector3 newAngles = new Vector3(transform.eulerAngles.y + mouseDiff.x, cameraTransform.eulerAngles.x + mouseDiff.y, 0);
+
+		// apply pitch rotation to camera, not player
+		//cameraTransform.eulerAngles = new Vector3(newAngles.y, 0, 0);
+		//transform.eulerAngles = new Vector3(0, newAngles.x, 0);
+		cameraTransform.Rotate(Vector3.right, mouseDiff.y);
+		transform.Rotate(Vector3.up, mouseDiff.x);
+
 		lastMouse = Input.mousePosition;
 
 		// Keyboard commands.
@@ -70,10 +79,26 @@ public class WalkCamera : MonoBehaviour
 		newPosition.x = transform.position.x;
 		newPosition.z = transform.position.z;
 		newPosition.y = transform.position.y;
+		
+
+		// lock to ground
+		RaycastHit[] rayHits = Physics.RaycastAll(new Ray(gameObject.transform.position, Vector3.down));
+		foreach(RaycastHit hit in rayHits)
+		{
+			if(hit.collider.tag == "Terrain")
+			{
+				float groundHeight = hit.point.y;
+				newPosition.y = groundHeight + distToGround;
+
+				Debug.Log("Hit terrain at " + groundHeight + "!");
+				break;
+			}
+		}
+
 		transform.position = newPosition;
 
-		Jump ();
 
+		Jump (); // remove?
 	}
 
 	private Vector3 getDirection()
