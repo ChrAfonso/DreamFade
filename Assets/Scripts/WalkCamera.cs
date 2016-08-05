@@ -26,14 +26,18 @@ public class WalkCamera : MonoBehaviour
 	private float distToGround;
 
 	private Transform cameraTransform;
+	private Transform feetTransform;
 
 	void Start()
 	{
 
 		rb = GetComponent<Rigidbody> ();
-		distToGround = GetComponent<Collider>().bounds.extents.y;
+		//distToGround = GetComponent<Collider>().bounds.extents.y;
 
 		cameraTransform = transform.FindChild("MainCamera");
+		feetTransform = transform.FindChild("Feet");
+		distToGround = transform.position.y - feetTransform.position.y;
+		Debug.Log("distToGround:" + distToGround);
 	}
 
 	void Update()
@@ -42,11 +46,8 @@ public class WalkCamera : MonoBehaviour
 		// Mouse input.
 		Vector3 mouseDiff = Input.mousePosition - lastMouse;
 		mouseDiff = new Vector3(mouseDiff.x * camSens, mouseDiff.y * camSens, 0);
-		Vector3 newAngles = new Vector3(transform.eulerAngles.y + mouseDiff.x, cameraTransform.eulerAngles.x + mouseDiff.y, 0);
 
 		// apply pitch rotation to camera, not player
-		//cameraTransform.eulerAngles = new Vector3(newAngles.y, 0, 0);
-		//transform.eulerAngles = new Vector3(0, newAngles.x, 0);
 		cameraTransform.Rotate(Vector3.right, mouseDiff.y);
 		transform.Rotate(Vector3.up, mouseDiff.x);
 
@@ -73,16 +74,14 @@ public class WalkCamera : MonoBehaviour
 		// player wants to move on X and Z axis only
 		p.y = 0;
 
+		transform.Translate(p);
+		//newPosition.x = transform.position.x;
+		//newPosition.z = transform.position.z;
+		//newPosition.y = transform.position.y;
 		Vector3 newPosition = transform.position;
 
-		transform.Translate(p);
-		newPosition.x = transform.position.x;
-		newPosition.z = transform.position.z;
-		newPosition.y = transform.position.y;
-		
-
 		// lock to ground
-		RaycastHit[] rayHits = Physics.RaycastAll(new Ray(gameObject.transform.position, Vector3.down));
+		RaycastHit[] rayHits = Physics.RaycastAll(new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down)); // HACK: raycast from up high to hit the ground even if player walked through it
 		foreach(RaycastHit hit in rayHits)
 		{
 			if(hit.collider.tag == "Terrain")
