@@ -30,7 +30,6 @@ public class WalkCamera : MonoBehaviour
 
 	void Start()
 	{
-
 		rb = GetComponent<Rigidbody> ();
 		//distToGround = GetComponent<Collider>().bounds.extents.y;
 
@@ -41,7 +40,6 @@ public class WalkCamera : MonoBehaviour
 
 	void Update()
 	{
-
 		// Mouse input.
 		Vector3 mouseDiff = Input.mousePosition - lastMouse;
 		mouseDiff = new Vector3(mouseDiff.x * camSens, mouseDiff.y * camSens, 0);
@@ -54,7 +52,7 @@ public class WalkCamera : MonoBehaviour
 
 		// Keyboard commands.
 		Vector3 p = getDirection();
-		if (Input.GetKey(KeyCode.LeftShift))
+		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
 		{
 			totalRun += Time.deltaTime;
 			p = p * totalRun * shiftAdd;
@@ -97,19 +95,19 @@ public class WalkCamera : MonoBehaviour
 	private Vector3 getDirection()
 	{
 		Vector3 p_Velocity = new Vector3();
-		if (Input.GetKey(KeyCode.W))
+		if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
 		{
 			p_Velocity += new Vector3(0, 0, 1);
 		}
-		if (Input.GetKey(KeyCode.S))
+		if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
 		{
 			p_Velocity += new Vector3(0, 0, -1);
 		}
-		if (Input.GetKey(KeyCode.A))
+		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
 		{
 			p_Velocity += new Vector3(-1, 0, 0);
 		}
-		if (Input.GetKey(KeyCode.D))
+		if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
 		{
 			p_Velocity += new Vector3(1, 0, 0);
 		}
@@ -123,14 +121,11 @@ public class WalkCamera : MonoBehaviour
 
 	void Jump()
 	{
-
 		if (Input.GetKeyDown (KeyCode.Space)) {
 
 			Vector3 upwardPos = new Vector3 (0, JumpHeight, 0);
 			rb.velocity = upwardPos;
-
 		}
-
 	}
 
 	bool IsGrounded()
