@@ -26,7 +26,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4000013084118128
 Transform:
   m_ObjectHideFlags: 1
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf265d97f5dc77f40857c6e77008a192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoursPerMinute: 50
+  hoursPerMinute: 12
   sun: {fileID: 0}
   mainCamera: {fileID: 0}
   dawnColor: {r: 0.8455882, g: 0.7749223, b: 0.20517948, a: 0}
