@@ -3,13 +3,23 @@ using System.Collections;
 
 public class PickupCollectable : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
+	GameObject objectInRange;
+
 	// Update is called once per frame
 	void Update () {
-	
+		
+	}
+
+	public void InRange(GameObject collectable)
+	{
+		objectInRange = collectable;
+	}
+
+	public void OutOfRange(GameObject collectable)
+	{
+		if (objectInRange == collectable)
+		{
+			objectInRange = null;
+		}
 	}
 }

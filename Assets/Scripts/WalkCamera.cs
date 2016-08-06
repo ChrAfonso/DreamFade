@@ -91,7 +91,6 @@ public class WalkCamera : MonoBehaviour
 
 		transform.position = newPosition;
 
-
 		Jump (); // remove?
 	}
 
