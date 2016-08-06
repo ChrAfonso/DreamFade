@@ -23,7 +23,6 @@ public class FPMainMenu : MonoBehaviour
 
         _loadingImage.SetActive(false);
         _quitConfirmationDialog.SetActive(false);
-        _startButton.GetComponent<Button>().interactable = false;
     }
 
     /// <summary>
