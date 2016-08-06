@@ -16,6 +16,8 @@ public class Collectable : MonoBehaviour {
 		if (other.tag == "Player")
 		{
 			StartGlowing();
+
+			other.gameObject.SendMessage("InRange", gameObject);
 		}
 	}
 
@@ -24,6 +26,8 @@ public class Collectable : MonoBehaviour {
 		if (other.tag == "Player")
 		{
 			StopGlowing();
+
+			other.gameObject.SendMessage("OutOfRange", gameObject);
 		}
 	}
 
