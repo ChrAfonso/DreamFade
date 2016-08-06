@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 namespace UnityStandardAssets.ImageEffects
 {
-    [ExecuteInEditMode]
+    //[ExecuteInEditMode]
     [RequireComponent (typeof(Camera))]
     [AddComponentMenu("Image Effects/Noise/Noise and Scratches")]
     public class NoiseAndScratches : MonoBehaviour
@@ -47,6 +47,8 @@ namespace UnityStandardAssets.ImageEffects
 
         private float scratchTimeLeft = 0.0f;
         private float scratchX, scratchY;
+
+		private bool once = false;
 
         protected void Start ()
         {
@@ -119,24 +121,32 @@ namespace UnityStandardAssets.ImageEffects
 
             mat.SetTexture("_GrainTex", grainTexture);
             mat.SetTexture("_ScratchTex", scratchTexture);
-            float grainScale = 1.0f / grainSize; // we have sanitized it earlier, won't be zero
-            mat.SetVector("_GrainOffsetScale", new Vector4(
-                                                   Random.value,
-                                                   Random.value,
-                                                   (float)Screen.width / (float)grainTexture.width * grainScale,
-                                                   (float)Screen.height / (float)grainTexture.height * grainScale
-                                                   ));
-            mat.SetVector("_ScratchOffsetScale", new Vector4(
-                                                     scratchX + Random.value*scratchJitter,
-                                                     scratchY + Random.value*scratchJitter,
-                                                     (float)Screen.width / (float) scratchTexture.width,
-                                                     (float)Screen.height / (float) scratchTexture.height
-                                                     ));
-            mat.SetVector("_Intensity", new Vector4(
-                                            Random.Range(grainIntensityMin, grainIntensityMax),
-                                            Random.Range(scratchIntensityMin, scratchIntensityMax),
-                                            0, 0 ));
-            Graphics.Blit (source, destination, mat);
+
+			// ------------------
+			if (!once)
+			{
+				float grainScale = 1.0f / grainSize; // we have sanitized it earlier, won't be zero
+				mat.SetVector("_GrainOffsetScale", new Vector4(
+													   Random.value,
+													   Random.value,
+													   (float)Screen.width / (float)grainTexture.width * grainScale,
+													   (float)Screen.height / (float)grainTexture.height * grainScale
+													   ));
+				mat.SetVector("_ScratchOffsetScale", new Vector4(
+														 scratchX + Random.value * scratchJitter,
+														 scratchY + Random.value * scratchJitter,
+														 (float)Screen.width / (float)scratchTexture.width,
+														 (float)Screen.height / (float)scratchTexture.height
+														 ));
+				mat.SetVector("_Intensity", new Vector4(
+												Random.Range(grainIntensityMin, grainIntensityMax),
+												Random.Range(scratchIntensityMin, scratchIntensityMax),
+												0, 0));
+
+				once = true;
+			}
+
+			Graphics.Blit (source, destination, mat);
         }
     }
 }
