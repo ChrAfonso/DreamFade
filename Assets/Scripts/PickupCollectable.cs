@@ -36,6 +36,7 @@ public class PickupCollectable : MonoBehaviour {
 			{
 				// Drop
 				carryingObject.transform.parent = null; // TODO activate gravity?
+                carryingObject = null;
 			}
 		}
 	}
