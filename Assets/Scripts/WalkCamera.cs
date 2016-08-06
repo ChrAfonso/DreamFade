@@ -36,6 +36,9 @@ public class WalkCamera : MonoBehaviour
 		cameraTransform = transform.FindChild("MainCamera");
 		feetTransform = transform.FindChild("Feet");
 		distToGround = transform.position.y - feetTransform.position.y;
+
+		Cursor.lockState = CursorLockMode.Confined;
+		Cursor.visible = false;
 	}
 
 	void Update()

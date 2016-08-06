@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Collectable
   - MagicTree
+  - Terrain
+  - Tree
   layers:
   - Default
   - TransparentFX

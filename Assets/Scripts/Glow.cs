@@ -18,7 +18,6 @@ public class Glow : MonoBehaviour {
 	void Update () {
 		Color glowColor = material.color;
 		glowColor.a = MinAlpha + (MaxAlpha * (Mathf.Sin(Time.time * Speed) + 1) / 2);
-		Debug.Log(glowColor.a);
 		material.color = glowColor;
 	}
 }

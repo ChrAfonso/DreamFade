@@ -6,6 +6,8 @@ public class Collectable : MonoBehaviour {
 	public GameObject GlowTemplate;
 	private GameObject myGlow;
 
+	public GameObject dropTarget;
+
 	// Use this for initialization
 	void Start () {
 	
