@@ -37,7 +37,6 @@ public class WalkCamera : MonoBehaviour
 		cameraTransform = transform.FindChild("MainCamera");
 		feetTransform = transform.FindChild("Feet");
 		distToGround = transform.position.y - feetTransform.position.y;
-		Debug.Log("distToGround:" + distToGround);
 	}
 
 	void Update()
@@ -75,9 +74,6 @@ public class WalkCamera : MonoBehaviour
 		p.y = 0;
 
 		transform.Translate(p);
-		//newPosition.x = transform.position.x;
-		//newPosition.z = transform.position.z;
-		//newPosition.y = transform.position.y;
 		Vector3 newPosition = transform.position;
 
 		// lock to ground
@@ -89,7 +85,6 @@ public class WalkCamera : MonoBehaviour
 				float groundHeight = hit.point.y;
 				newPosition.y = groundHeight + distToGround;
 
-				Debug.Log("Hit terrain at " + groundHeight + "!");
 				break;
 			}
 		}
