@@ -76,16 +76,16 @@ public class WalkCamera : MonoBehaviour
 
 		// lock to ground
 		RaycastHit[] rayHits = Physics.RaycastAll(new Ray(transform.position + new Vector3(0, 1000, 0), Vector3.down)); // HACK: raycast from up high to hit the ground even if player walked through it
-		foreach(RaycastHit hit in rayHits)
+		float highestGround = float.MinValue;
+		foreach (RaycastHit hit in rayHits)
 		{
-			if(hit.collider.tag == "Terrain")
+			if(hit.collider.tag == "Terrain" && hit.point.y > highestGround)
 			{
-				float groundHeight = hit.point.y;
-				newPosition.y = groundHeight + distToGround;
-
-				break;
+				highestGround = hit.point.y;
 			}
 		}
+		float groundHeight = highestGround;
+		newPosition.y = groundHeight + distToGround;
 
 		transform.position = newPosition;
 

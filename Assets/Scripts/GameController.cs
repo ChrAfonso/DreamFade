@@ -8,8 +8,8 @@ public class GameController : MonoBehaviour {
 		-Start the Game: Click/press something in the title screen
 
 		-Game loop:
-		-- Start day 1-5(?)
-		-- Timer changes lighting, colors from morning until night
+		OK Start day 1-5(?)
+		OK Timer changes lighting, colors from morning until night
 		-- fadeout (Camera effect??), apply color changes to the environment (Fade/Grey out not-awakened areas)
 		-- fadein, start a new day (repeat from above)
 		-- if after the last day unawakened areas remain: Gameover, the island fades to nothing.
