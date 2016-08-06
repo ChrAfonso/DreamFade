@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour {
 	private int day = 0;
 	private int days = 5;
 
-	private float timeOfDay = 16; // start in the morning
+	private float timeOfDay = 6; // start in the morning
 	public float hoursPerMinute = 10;
 
 	private static float timeOfDawn = 6;
@@ -46,16 +46,20 @@ public class GameController : MonoBehaviour {
 	public Color duskColor;
 	public Color nightColor;
 
+	public bool useSunColorLighing = false;
+	private Vector3 sunAngles;
 
 	// Use this for initialization
 	void Start () {
-		
+		timeOfDay = timeOfDawn;
+
+		sunAngles = sun.transform.eulerAngles;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		timeOfDay += (hoursPerMinute * Time.deltaTime / 60);
-		Debug.Log("time of day: " + timeOfDay);
+		//Debug.Log("time of day: " + timeOfDay);
 
 		UpdateLighting();
 
@@ -67,44 +71,46 @@ public class GameController : MonoBehaviour {
 
 	private void UpdateLighting()
 	{
-		if(timeOfDay < timeOfSunrise)
+		if (useSunColorLighing)
 		{
-			float factor = (timeOfDay - timeOfDawn) / (timeOfSunrise - timeOfDawn);
-			sun.color = (1 - factor) * dawnColor + factor * sunriseColor;
-		}
-		else if (timeOfDay < 12)
-		{
-			float factor = (timeOfDay - timeOfSunrise) / (13 - timeOfSunrise);
-			sun.color = (1 - factor) * sunriseColor + factor * noonColor;
-		}
-		else if(timeOfDay < timeOfSunDown)
-		{
-			float factor = (timeOfDay - 13) / (timeOfSunDown - 13);
-			sun.color = (1 - factor) * noonColor + factor * sundownColor;
-		}
-		else if (timeOfDay < timeOfDusk)
-		{
-			float factor = (timeOfDay - timeOfSunDown) / (timeOfDusk - timeOfSunDown);
-			sun.color = (1 - factor) * sundownColor + factor * duskColor;
-		}
-		else if(timeOfDay < nightTime)
-		{
-			float factor = (timeOfDay - timeOfDusk) / (nightTime - timeOfDusk);
-			sun.color = (1 - factor) * duskColor + factor * nightColor;
-		}
-		else // nighttime
-		{
-			sun.color = nightColor;
+			if (timeOfDay < timeOfSunrise)
+			{
+				float factor = (timeOfDay - timeOfDawn) / (timeOfSunrise - timeOfDawn);
+				sun.color = (1 - factor) * dawnColor + factor * sunriseColor;
+			}
+			else if (timeOfDay < 12)
+			{
+				float factor = (timeOfDay - timeOfSunrise) / (13 - timeOfSunrise);
+				sun.color = (1 - factor) * sunriseColor + factor * noonColor;
+			}
+			else if (timeOfDay < timeOfSunDown)
+			{
+				float factor = (timeOfDay - 13) / (timeOfSunDown - 13);
+				sun.color = (1 - factor) * noonColor + factor * sundownColor;
+			}
+			else if (timeOfDay < timeOfDusk)
+			{
+				float factor = (timeOfDay - timeOfSunDown) / (timeOfDusk - timeOfSunDown);
+				sun.color = (1 - factor) * sundownColor + factor * duskColor;
+			}
+			else if (timeOfDay < nightTime)
+			{
+				float factor = (timeOfDay - timeOfDusk) / (nightTime - timeOfDusk);
+				sun.color = (1 - factor) * duskColor + factor * nightColor;
+			}
+			else // nighttime
+			{
+				sun.color = nightColor;
+			}
+
+			// HACK the sky
+			mainCamera.backgroundColor = sun.color;
 		}
 
-		// HACK the sky
-		mainCamera.backgroundColor = sun.color;
-
-		// TODO direction?
-		Vector3 newAngles = sun.transform.eulerAngles;
-		newAngles.x = (180 - ((timeOfDay - timeOfDusk)/(nightTime - timeOfDusk))); // HACK play around with values
-		Debug.Log("sun angle: " + newAngles);
-		//sun.transform.eulerAngles = newAngles;
+		// TODO direction
+		sunAngles.x = (185 - ((timeOfDay - timeOfDawn)/(nightTime - timeOfDawn))*200); // HACK play around with values
+		Debug.Log("sun angle at "+timeOfDay+": " + sunAngles.x);
+		sun.transform.eulerAngles = sunAngles;
 	}
 
 	private void EndOfDay()

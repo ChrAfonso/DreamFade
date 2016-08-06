@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf265d97f5dc77f40857c6e77008a192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoursPerMinute: 10
+  hoursPerMinute: 24
   sun: {fileID: 0}
   mainCamera: {fileID: 0}
   dawnColor: {r: 0.8161765, g: 0.6848101, b: 0.40208694, a: 0}
@@ -60,3 +60,4 @@ MonoBehaviour:
   sundownColor: {r: 1, g: 0.9772819, b: 0.88235295, a: 0}
   duskColor: {r: 0.5441177, g: 0.38808393, b: 0.38808393, a: 0}
   nightColor: {r: 0.12191825, g: 0.19002432, b: 0.30147058, a: 0}
+  useSunColorLighing: 0
