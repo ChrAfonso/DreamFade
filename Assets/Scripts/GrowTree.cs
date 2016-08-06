@@ -34,7 +34,6 @@ public class GrowTree : MonoBehaviour {
 		// use actual scale as target, then shrink as starting value
 		targetScaleTrunk = tTrunk.localScale;
 		targetScaleTop = tTop.localScale;
-		Transform defaultLeaf = ttLeaves.GetChild(0);
 		targetScaleLeaves = new Vector3[ttLeaves.childCount];
 		for (int l = 0; l < ttLeaves.childCount; l++)
 		{
