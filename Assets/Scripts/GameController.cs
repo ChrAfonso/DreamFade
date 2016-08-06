@@ -26,20 +26,23 @@ public class GameController : MonoBehaviour {
 	private int day = 0;
 	private int days = 5;
 
-	private float timeOfDay = 6; // start in the morning
-	public static float hoursPerMinute = 2;
+	private float timeOfDay = 16; // start in the morning
+	public float hoursPerMinute = 10;
 
 	private static float timeOfDawn = 6;
-	private static float timeOfDusk = 18;
-	private static float nightTime = 20; // fadeout here
-
+	private static float timeOfSunrise = 8;
+	private static float timeOfSunDown = 18;
+	private static float timeOfDusk = 20;
+	private static float nightTime = 22; // fadeout here
 
 	// objects
 	public Light sun;
 	public Camera mainCamera;
 
 	public Color dawnColor;
+	public Color sunriseColor;
 	public Color noonColor;
+	public Color sundownColor;
 	public Color duskColor;
 	public Color nightColor;
 
@@ -52,6 +55,7 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		timeOfDay += (hoursPerMinute * Time.deltaTime / 60);
+		Debug.Log("time of day: " + timeOfDay);
 
 		UpdateLighting();
 
@@ -63,15 +67,25 @@ public class GameController : MonoBehaviour {
 
 	private void UpdateLighting()
 	{
-		if(timeOfDay < 12)
+		if(timeOfDay < timeOfSunrise)
 		{
-			float factor = (timeOfDay - timeOfDawn) / (12 - timeOfDawn);
-			sun.color = (1 - factor) * dawnColor + factor * noonColor;
+			float factor = (timeOfDay - timeOfDawn) / (timeOfSunrise - timeOfDawn);
+			sun.color = (1 - factor) * dawnColor + factor * sunriseColor;
 		}
-		else if(timeOfDay < timeOfDusk)
+		else if (timeOfDay < 12)
 		{
-			float factor = (timeOfDay - 12) / (timeOfDusk - 12);
-			sun.color = (1 - factor) * noonColor + factor * duskColor;
+			float factor = (timeOfDay - timeOfSunrise) / (13 - timeOfSunrise);
+			sun.color = (1 - factor) * sunriseColor + factor * noonColor;
+		}
+		else if(timeOfDay < timeOfSunDown)
+		{
+			float factor = (timeOfDay - 13) / (timeOfSunDown - 13);
+			sun.color = (1 - factor) * noonColor + factor * sundownColor;
+		}
+		else if (timeOfDay < timeOfDusk)
+		{
+			float factor = (timeOfDay - timeOfSunDown) / (timeOfDusk - timeOfSunDown);
+			sun.color = (1 - factor) * sundownColor + factor * duskColor;
 		}
 		else if(timeOfDay < nightTime)
 		{
@@ -89,7 +103,8 @@ public class GameController : MonoBehaviour {
 		// TODO direction?
 		Vector3 newAngles = sun.transform.eulerAngles;
 		newAngles.x = (180 - ((timeOfDay - timeOfDusk)/(nightTime - timeOfDusk))); // HACK play around with values
-		sun.transform.eulerAngles = newAngles;
+		Debug.Log("sun angle: " + newAngles);
+		//sun.transform.eulerAngles = newAngles;
 	}
 
 	private void EndOfDay()
