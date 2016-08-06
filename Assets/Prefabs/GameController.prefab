@@ -26,7 +26,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4000013084118128
 Transform:
   m_ObjectHideFlags: 1
@@ -51,12 +51,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf265d97f5dc77f40857c6e77008a192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoursPerMinute: 10
+  hoursPerMinute: 12
   sun: {fileID: 0}
   mainCamera: {fileID: 0}
-  dawnColor: {r: 0.8161765, g: 0.6848101, b: 0.40208694, a: 0}
+  dawnColor: {r: 0.8455882, g: 0.7749223, b: 0.20517948, a: 0}
   sunriseColor: {r: 1, g: 0.9981744, b: 0.9338235, a: 0}
-  noonColor: {r: 0.9117647, g: 1, b: 0.9926978, a: 0}
-  sundownColor: {r: 1, g: 0.9772819, b: 0.88235295, a: 0}
-  duskColor: {r: 0.5441177, g: 0.38808393, b: 0.38808393, a: 0}
+  noonColor: {r: 0.6985294, g: 1, b: 0.97505075, a: 0}
+  sundownColor: {r: 0.9558824, g: 0.6466263, b: 0.8961638, a: 0}
+  duskColor: {r: 0.53676474, g: 0.31969076, b: 0.52179414, a: 0}
   nightColor: {r: 0.12191825, g: 0.19002432, b: 0.30147058, a: 0}
+  useSunColorLighing: 1
