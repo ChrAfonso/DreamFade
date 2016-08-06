@@ -15,9 +15,10 @@ public class GrowTree : MonoBehaviour {
 	private float pLeavesStart = .5f;
 	private float pLeavesStop = 1f;
 
+	public Vector3 startScaleTrunk;
 	private Vector3 targetScaleTrunk, targetScaleTop;
 	private Vector3[] targetScaleLeaves;
-	private Vector3 startScaleTrunk, startScaleTop;
+	private Vector3 startScaleTop;
 	private Vector3[] startScaleLeaves;
 
 	Transform tTrunk, tTop;
@@ -40,14 +41,13 @@ public class GrowTree : MonoBehaviour {
 			targetScaleLeaves[l] = ttLeaves.GetChild(l).localScale;
 		}
 
-		tTrunk.localScale = Vector3.zero;
+		tTrunk.localScale = startScaleTrunk;
 		tTop.localScale = Vector3.zero;
 		for(int l = 0; l < ttLeaves.childCount; l++)
 		{
 			ttLeaves.GetChild(l).localScale = Vector3.zero;
 		}
 
-		startScaleTrunk = Vector3.zero;
 		startScaleTop = Vector3.zero;
 		startScaleLeaves = new Vector3[ttLeaves.childCount];
 		for (int l = 0; l < ttLeaves.childCount; l++)
