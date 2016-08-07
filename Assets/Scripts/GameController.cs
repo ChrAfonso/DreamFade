@@ -53,7 +53,7 @@ public class GameController : MonoBehaviour {
 	private Vector3 sunAngles;
 
 	// game state
-	private int numAreas = 5;
+	private int numAreas = 3;
 	private bool[] areaAwakened;
 	private int currentArea = 0; // starting area
 
@@ -71,7 +71,7 @@ public class GameController : MonoBehaviour {
 		for(int a = 0; a < numAreas; a++) areaAwakened[a] = false;
 
 		// TESTING
-		areaAwakened[3] = true;
+		areaAwakened[2] = true;
 	}
 	
 	// Update is called once per frame
@@ -94,12 +94,13 @@ public class GameController : MonoBehaviour {
 		}
 
 		// TESTING!
-		if (Input.GetKeyDown(KeyCode.Alpha3)) OnAreaEnter(3);
+		if (Input.GetKeyDown(KeyCode.Alpha2)) OnAreaEnter(2);
+		else if (Input.GetKeyDown(KeyCode.Alpha1)) OnAreaEnter(1);
 		else if (Input.GetKeyDown(KeyCode.Alpha0)) OnAreaEnter(0);
 
 		// Game State
 		timeOfDay += (hoursPerMinute * Time.deltaTime / 60);
-		Debug.Log("time of day: " + timeOfDay);
+		//Debug.Log("time of day: " + timeOfDay);
 
 		UpdateLighting();
 
@@ -149,7 +150,7 @@ public class GameController : MonoBehaviour {
 
 		// direction
 		sunAngles.x = (165 - ((timeOfDay - timeOfDawn)/(nightTime - timeOfDawn))*160); // HACK play around with values - original: 185 to -15
-		Debug.Log("sun angle at "+timeOfDay+": " + sunAngles.x);
+		//Debug.Log("sun angle at "+timeOfDay+": " + sunAngles.x);
 		sun.transform.eulerAngles = sunAngles;
 	}
 
@@ -183,10 +184,21 @@ public class GameController : MonoBehaviour {
 
 	private void UpdateDaySettings(int area=-1, float duration=-1)
 	{
-		float targetSaturation = 0.5f - (day / (days-1)) + (area > -1 && areaAwakened[area] ? 0.5f : 0);
+		float targetSaturation;
+		if (area > -1 && areaAwakened[area])
+		{
+			targetSaturation = 1f;
+		}
+		else
+		{
+			targetSaturation = 0.5f - (0.5f * ((float)day / (days - 1))); //Mathf.Pow(1f - ((float)day / (days - 1)), 2);
+		}
+
+		Debug.Log("Set target saturation: " + targetSaturation);
 		Camera.main.GetComponent<CameraFilter>().SetTargetSaturation(targetSaturation);
 
-		float targetNoise = day / 2; // TODO reduce in awakened areas?
+		float targetNoise = (float)day/(days-1) * 2f; // TODO reduce in awakened areas?
+		Debug.Log("Set target noise: " + targetNoise);
 		Camera.main.GetComponent<CameraFilter>().SetTargetNoise(targetNoise);
 	}
 
