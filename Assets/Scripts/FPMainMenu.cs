@@ -16,10 +16,14 @@ public class FPMainMenu : MonoBehaviour
 
     void Start()
     {
+        // Avoid duplicated audio objects
         if (_audioClip == null)
             _audioClip = _backgroundMusic;
         else
             DestroyObject(_backgroundMusic);
+
+        // Keep the music playing during the other scenes.
+        DontDestroyOnLoad(_audioClip);
 
         _loadingImage.SetActive(false);
         _quitConfirmationDialog.SetActive(false);
@@ -42,6 +46,11 @@ public class FPMainMenu : MonoBehaviour
     {
         //DontDestroyOnLoad(_audioClip);
         _loadingImage.SetActive(true);
+        var audioSource = _audioClip.GetComponent<AudioSource>();
+        if (audioSource != null)
+        {
+            audioSource.volume = 0.5F;
+        }
         SceneManager.LoadScene((int)FPConstants.Scenes.Game);
     }
 
@@ -50,7 +59,7 @@ public class FPMainMenu : MonoBehaviour
     /// </summary>
     public void LoadCredits()
     {
-        DontDestroyOnLoad(_audioClip);
+        //DontDestroyOnLoad(_audioClip);
         SceneManager.LoadScene((int)FPConstants.Scenes.Credits);
     }
 

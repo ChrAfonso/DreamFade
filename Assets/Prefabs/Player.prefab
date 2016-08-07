@@ -53,6 +53,7 @@ GameObject:
   - 114: {fileID: 114000011347466608}
   - 114: {fileID: 114000013878387308}
   - 114: {fileID: 114000013213212340}
+  - 114: {fileID: 114000011350388562}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -80,10 +81,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 110294}
-  m_LocalRotation: {x: 0, y: -0.62870985, z: 0, w: 0.77764}
-  m_LocalPosition: {x: 391.7, y: 17.77, z: 37.41}
+  m_LocalRotation: {x: 0, y: -0.47355026, z: 0, w: 0.8807668}
+  m_LocalPosition: {x: 242.56, y: 46.4, z: 115.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: -77.91, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -56.53, z: 0}
   m_Children:
   - {fileID: 439214}
   - {fileID: 482032}
@@ -144,10 +145,10 @@ Rigidbody:
   m_GameObject: {fileID: 110294}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 500
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -177,6 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpHeight: 8
+  Blocked: 0
 --- !u!124 &12497908
 Behaviour:
   m_ObjectHideFlags: 1
@@ -329,6 +331,29 @@ MonoBehaviour:
   scratchTexture: {fileID: 2800000, guid: 6205c27cc031f4e66b8ea90d1bfaa158, type: 3}
   shaderRGB: {fileID: 4800000, guid: 5d7f4c401ae8946bcb0d6ff68a9e7466, type: 3}
   shaderYUV: {fileID: 4800000, guid: 0e447868506ba49f0a73235b8a8b647a, type: 3}
+--- !u!114 &114000011350388562
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd6d4281e5d7cd44d8c6e38bc2c1b8d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 0
+  intensity: 0
+  chromaticAberration: 0.2
+  axialAberration: 0.5
+  blur: 0
+  blurSpread: 0.75
+  luminanceDependency: 0.25
+  blurDistance: 2.5
+  vignetteShader: {fileID: 4800000, guid: 627943dc7a9a74286b70a4f694a0acd5, type: 3}
+  separableBlurShader: {fileID: 4800000, guid: e97c14fbb5ea04c3a902cc533d7fc5d1, type: 3}
+  chromAberrationShader: {fileID: 4800000, guid: 2b4f29398d9484ccfa9fd220449f5eee,
+    type: 3}
 --- !u!114 &114000012163337434
 MonoBehaviour:
   m_ObjectHideFlags: 1
