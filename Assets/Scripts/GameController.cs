@@ -22,6 +22,9 @@ public class GameController : MonoBehaviour {
 
 	---------------------------------------- */
 
+	// Singleton
+	public static GameController instance;
+
 	// Settings
 	private int day = 0;
 	private int days = 5;
@@ -49,21 +52,59 @@ public class GameController : MonoBehaviour {
 	public bool useSunColorLighing = false;
 	private Vector3 sunAngles;
 
+	// game state
+	private int numAreas = 3;
+	private bool[] areaAwakened;
+	private int currentArea = 0; // starting area
+
 	// Use this for initialization
 	void Start () {
+		instance = this;
+
+		Debug.Log("Starting GameController");
 		timeOfDay = timeOfDawn;
 
 		sunAngles = sun.transform.eulerAngles;
+
+		// initial state
+		areaAwakened = new bool[numAreas];
+		for(int a = 0; a < numAreas; a++) areaAwakened[a] = false;
+
+		// TESTING
+		areaAwakened[2] = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		// User Input - DEBUG
+		if(Input.GetKey(KeyCode.F9))
+		{
+			hoursPerMinute = 50;
+		}
+		else
+		{
+			hoursPerMinute = 12; // HACK default
+		}
+
+		if(Input.GetKeyDown(KeyCode.N))
+		{
+			// next day
+			EndOfDay();
+			return;
+		}
+
+		// TESTING!
+		if (Input.GetKeyDown(KeyCode.Alpha2)) OnAreaEnter(2);
+		else if (Input.GetKeyDown(KeyCode.Alpha1)) OnAreaEnter(1);
+		else if (Input.GetKeyDown(KeyCode.Alpha0)) OnAreaEnter(0);
+
+		// Game State
 		timeOfDay += (hoursPerMinute * Time.deltaTime / 60);
 		//Debug.Log("time of day: " + timeOfDay);
 
 		UpdateLighting();
 
-		if(timeOfDay > nightTime)
+		if (timeOfDay > nightTime)
 		{
 			EndOfDay();
 		}
@@ -107,28 +148,75 @@ public class GameController : MonoBehaviour {
 			mainCamera.backgroundColor = sun.color;
 		}
 
-		// TODO direction
-		sunAngles.x = (185 - ((timeOfDay - timeOfDawn)/(nightTime - timeOfDawn))*200); // HACK play around with values
-		Debug.Log("sun angle at "+timeOfDay+": " + sunAngles.x);
+		// direction
+		sunAngles.x = (165 - ((timeOfDay - timeOfDawn)/(nightTime - timeOfDawn))*160); // HACK play around with values - original: 185 to -15
+		//Debug.Log("sun angle at "+timeOfDay+": " + sunAngles.x);
 		sun.transform.eulerAngles = sunAngles;
 	}
 
 	private void EndOfDay()
 	{
 		day++;
-		if(day >= days)
+		if (day >= days)
 		{
-			CheckGameOver();
+			GameOver();
+		}
+		else // A new day
+		{
+			// reset clock and degrade visuals
+			timeOfDay = timeOfDawn;
+			UpdateDaySettings(currentArea);
+		}
+	}
+
+	public void AwakenArea(int area)
+	{
+		areaAwakened[area] = true;
+		UpdateDaySettings(area, 5f);
+		// TODO play music
+	}
+
+	public void OnAreaEnter(int area)
+	{
+		currentArea = area;
+		UpdateDaySettings(area);
+	}
+
+	private void UpdateDaySettings(int area=-1, float duration=-1)
+	{
+		float targetSaturation;
+		if (area > -1 && areaAwakened[area])
+		{
+			targetSaturation = 1f;
+		}
+		else
+		{
+			targetSaturation = 0.5f - (0.5f * ((float)day / (days - 1))); //Mathf.Pow(1f - ((float)day / (days - 1)), 2);
 		}
 
-		// reset clock
-		timeOfDay = timeOfDawn;
+		Debug.Log("Set target saturation: " + targetSaturation);
+		Camera.main.GetComponent<CameraFilter>().SetTargetSaturation(targetSaturation);
 
+		float targetNoise = (float)day/(days-1) * 2f; // TODO reduce in awakened areas?
+		Debug.Log("Set target noise: " + targetNoise);
+		Camera.main.GetComponent<CameraFilter>().SetTargetNoise(targetNoise);
+	}
+
+	private bool CheckGameOver()
+	{
+		// TODO check if all areas are awakened
+
+		return false;
+	}
+
+	void GameOver()
+	{
 		// TODO
 	}
 
-	private void CheckGameOver()
+	void Win()
 	{
 		// TODO
+		// play win music
 	}
 }
