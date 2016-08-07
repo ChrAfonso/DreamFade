@@ -49,6 +49,8 @@ public class PickupCollectable : MonoBehaviour {
 					}
 
 					// TODO for landscape (or camera filter trigger): Make colorful again
+					Camera.main.GetComponent<CameraFilter>().SetTargetSaturation(1.0f);
+
 					// TODO for GameController: Notify of awakening
 				}
 				else
