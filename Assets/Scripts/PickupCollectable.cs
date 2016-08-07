@@ -38,20 +38,14 @@ public class PickupCollectable : MonoBehaviour {
 				GameObject dropTarget = carryingObject.GetComponent<Collectable>().dropTarget;
 				if (dropTarget != null && dropTarget.GetComponent<Collider>().bounds.Intersects(carryingObject.GetComponent<Collider>().bounds))
 				{
-					carryingObject.transform.SetParent(dropTarget.transform, false); // attach to target
-					carryingObject = null;
-					
-					// TODO for each tree: trigger awakening animation
+					// trigger trees awakening animation
 					if(dropTarget.tag == "MagicTree")
 					{
 						Debug.Log("Flower dropped, awaken trees...");
-						dropTarget.GetComponent<OnFlowerDrop>().FlowerDropped();
+						dropTarget.GetComponent<OnFlowerDrop>().FlowerDropped(carryingObject);
 					}
 
-					// TODO for landscape (or camera filter trigger): Make colorful again
-					Camera.main.GetComponent<CameraFilter>().SetTargetSaturation(1.0f);
-
-					// TODO for GameController: Notify of awakening
+					carryingObject = null;
 				}
 				else
 				{

@@ -148,7 +148,7 @@ public class GameController : MonoBehaviour {
 		}
 
 		// direction
-		sunAngles.x = (185 - ((timeOfDay - timeOfDawn)/(nightTime - timeOfDawn))*200); // HACK play around with values
+		sunAngles.x = (165 - ((timeOfDay - timeOfDawn)/(nightTime - timeOfDawn))*160); // HACK play around with values - original: 185 to -15
 		Debug.Log("sun angle at "+timeOfDay+": " + sunAngles.x);
 		sun.transform.eulerAngles = sunAngles;
 	}
@@ -162,10 +162,8 @@ public class GameController : MonoBehaviour {
 		}
 		else // A new day
 		{
-			// reset clock
+			// reset clock and degrade visuals
 			timeOfDay = timeOfDawn;
-
-			// TODO
 			UpdateDaySettings(currentArea);
 		}
 	}
@@ -185,7 +183,7 @@ public class GameController : MonoBehaviour {
 
 	private void UpdateDaySettings(int area=-1, float duration=-1)
 	{
-		float targetSaturation = 0.5f - (day / 5) + (area > -1 && areaAwakened[area] ? 0.5f : 0);
+		float targetSaturation = 0.5f - (day / (days-1)) + (area > -1 && areaAwakened[area] ? 0.5f : 0);
 		Camera.main.GetComponent<CameraFilter>().SetTargetSaturation(targetSaturation);
 
 		float targetNoise = day / 2; // TODO reduce in awakened areas?

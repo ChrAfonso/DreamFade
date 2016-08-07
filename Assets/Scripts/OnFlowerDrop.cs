@@ -3,6 +3,8 @@ using System.Collections;
 
 public class OnFlowerDrop : MonoBehaviour {
 
+	public int AreaID;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -13,10 +15,15 @@ public class OnFlowerDrop : MonoBehaviour {
 	
 	}
 
-	public void FlowerDropped()
+	public void FlowerDropped(GameObject flower)
 	{
+		flower.transform.SetParent(transform, false); // attach to target
+
+		// notify game controller
+		GameController.instance.AwakenArea(AreaID);
+
 		// awaken trees
-		for(int t = 0; t < transform.parent.childCount; t++)
+		for (int t = 0; t < transform.parent.childCount; t++)
 		{
 			GameObject tree = transform.parent.GetChild(t).gameObject;
 			if (tree.tag == "Tree")
