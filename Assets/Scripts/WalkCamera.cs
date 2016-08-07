@@ -28,6 +28,8 @@ public class WalkCamera : MonoBehaviour
 	private Transform cameraTransform;
 	private Transform feetTransform;
 
+	public bool Blocked = false;
+
 	void Start()
 	{
 		rb = GetComponent<Rigidbody> ();
@@ -43,6 +45,8 @@ public class WalkCamera : MonoBehaviour
 
 	void Update()
 	{
+		if (Blocked) return;
+
 		// Mouse input.
 		Vector3 mouseDiff = Input.mousePosition - lastMouse;
 		mouseDiff = new Vector3(mouseDiff.x * camSens, mouseDiff.y * camSens, 0);

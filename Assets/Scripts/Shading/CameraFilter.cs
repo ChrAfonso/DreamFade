@@ -6,6 +6,7 @@ public class CameraFilter : MonoBehaviour {
 
 	private static float defaultSaturationDuration = 2f;
 	private static float defaultNoiseDuration = 2f;
+	private static float defaultFadeDuration = 5f;
 
 	private float targetSaturation; // TODO change by area
 	private float startSaturation;
@@ -17,13 +18,22 @@ public class CameraFilter : MonoBehaviour {
 	private float nChange = -1f;
 	private float nChangeDuration = 2f;
 
+	private float tFade = -1f;
+	private float fadeDuration = 5f;
+	private float fadeStart = 1f;
+	private float fadeTarget = 0f;
+
+	private string fadeCallback = "";
+
 	private ColorCorrectionCurves colorFilter;
 	private NoiseAndScratches noiseFilter;
+	private VignetteAndChromaticAberration vignetteFilter;
 
 	// Use this for initialization
 	void Start () {
 		colorFilter = GetComponent<ColorCorrectionCurves>();
 		noiseFilter = GetComponent<NoiseAndScratches>();
+		vignetteFilter = GetComponent<VignetteAndChromaticAberration>();
 	}
 	
 	// Update is called once per frame
@@ -55,6 +65,27 @@ public class CameraFilter : MonoBehaviour {
 				nChange = -1;
 			}
 		}
+
+		if (tFade != -1)
+		{
+			float p = tFade / fadeDuration;
+			float s = p * p * (3 - 2 * p);
+			vignetteFilter.intensity = (1 - p) * fadeStart + p * fadeTarget;
+			vignetteFilter.blur = (1 - p) * fadeStart + p * fadeTarget;
+
+			tFade += Time.deltaTime;
+			if (tFade >= fadeDuration)
+			{
+				vignetteFilter.intensity = fadeTarget;
+				vignetteFilter.blur = fadeTarget;
+				tFade = -1;
+
+				if (fadeCallback != "")
+				{
+					GameController.instance.SendMessage(fadeCallback);
+				}
+			}
+		}
 	}
 
 	public void SetTargetSaturation(float s, float duration=-1)
@@ -73,5 +104,25 @@ public class CameraFilter : MonoBehaviour {
 		startNoise = noiseFilter.grainSize;
 		targetNoise = n;
 		nChange = 0;
+	}
+	
+	public void FadeOut(float duration=-1, string callback="")
+	{
+		fadeDuration = (duration == -1 ? defaultFadeDuration : duration);
+		if (callback != "") fadeCallback = callback;
+
+		tFade = 0;
+		fadeStart = vignetteFilter.intensity;
+		fadeTarget = 1f;
+	}
+
+	public void FadeIn(float duration = -1, string callback="")
+	{
+		fadeDuration = (duration == -1 ? defaultFadeDuration : duration);
+		if (callback != "") fadeCallback = callback;
+
+		tFade = 0;
+		fadeStart = vignetteFilter.intensity;
+		fadeTarget = 0f;
 	}
 }

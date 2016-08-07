@@ -156,6 +156,15 @@ public class GameController : MonoBehaviour {
 
 	private void EndOfDay()
 	{
+		// lock player?
+
+		// TODO FadeOut
+		Camera.main.GetComponent<CameraFilter>().FadeOut(3f, "StartNewDay");
+	}
+
+	// callback
+	public void StartNewDay()
+	{
 		day++;
 		if (day >= days)
 		{
@@ -167,6 +176,14 @@ public class GameController : MonoBehaviour {
 			timeOfDay = timeOfDawn;
 			UpdateDaySettings(currentArea);
 		}
+
+		Camera.main.GetComponent<CameraFilter>().FadeIn(3f, "NewDay");
+	}
+
+	// callback
+	public void NewDay()
+	{
+		// unlock player?
 	}
 
 	public void AwakenArea(int area)
