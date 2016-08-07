@@ -15,6 +15,8 @@ namespace UnityStandardAssets.ImageEffects
         public bool monochrome = true;
         private bool rgbFallback = false;
 
+		public bool Animated = false;
+
         // Noise grain takes random intensity from Min to Max.
         [Range(0.0f,5.0f)]
         public float grainIntensityMin = 0.1f;
@@ -123,7 +125,7 @@ namespace UnityStandardAssets.ImageEffects
             mat.SetTexture("_ScratchTex", scratchTexture);
 
 			// ------------------
-			if (!once)
+			if (!once || Animated)
 			{
 				float grainScale = 1.0f / grainSize; // we have sanitized it earlier, won't be zero
 				mat.SetVector("_GrainOffsetScale", new Vector4(
