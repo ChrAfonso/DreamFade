@@ -121,10 +121,10 @@ RectTransform:
   m_Children:
   - {fileID: 279216524}
   m_Father: {fileID: 2138971265}
-  m_RootOrder: 6
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000030518, y: -200}
+  m_RootOrder: 2
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -0.000030517578, y: 60}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &216234557
@@ -311,16 +311,16 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 477692392}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 2138971265}
-  m_RootOrder: 2
+  m_Father: {fileID: 1289302894}
+  m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 78}
+  m_AnchoredPosition: {x: 0.11413574, y: -68}
   m_SizeDelta: {x: 800, y: 151}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &477692394
@@ -398,11 +398,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 2138971265}
-  m_RootOrder: 5
+  m_Father: {fileID: 1289302894}
+  m_RootOrder: 2
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.11414, y: -158}
+  m_AnchoredPosition: {x: 0.00002232939, y: -201.19156}
   m_SizeDelta: {x: 800, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &613351392
@@ -620,12 +620,15 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
+  m_Children:
+  - {fileID: 477692393}
+  - {fileID: 1971568544}
+  - {fileID: 613351391}
   m_Father: {fileID: 2138971265}
   m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.11414, y: 146}
+  m_AnchoredPosition: {x: -0.11414, y: 96}
   m_SizeDelta: {x: 800, y: 129}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1289302895
@@ -735,84 +738,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1597595829}
---- !u!1 &1733514041
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 224: {fileID: 1733514042}
-  - 222: {fileID: 1733514044}
-  - 114: {fileID: 1733514043}
-  m_Layer: 5
-  m_Name: TextShadersCredits
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &1733514042
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1733514041}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 2138971265}
-  m_RootOrder: 4
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.11414, y: -51}
-  m_SizeDelta: {x: 800, y: 121.5}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1733514043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1733514041}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 92ca2878a0fce954ab9b6fb29c55ae4c, type: 3}
-    m_FontSize: 20
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 1
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 1
-    m_LineSpacing: 0.9
-  m_Text: 'Watercolour-like shader: http://forum.unity3d.com/threads/watercolour-shadow-shader-effect.379102/#post-2460082
-
-    Basic shader tutorial: http://www.alanzucconi.com/2015/07/08/screen-shaders-and-postprocessing-effects-in-unity3d/
-
-    Shader in the store: https://www.assetstore.unity3d.com/en/#!/content/37726'
---- !u!222 &1733514044
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1733514041}
 --- !u!1 &1971568543
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,11 +766,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 2138971265}
-  m_RootOrder: 3
+  m_Father: {fileID: 1289302894}
+  m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.11415094, y: -65.5}
+  m_AnchoredPosition: {x: 0.22825938, y: -161.69156}
   m_SizeDelta: {x: 800, y: 131}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1971568545
@@ -880,9 +805,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 0.9
-  m_Text: "One Tree Hill Obelisk\r by gestaltR: https://3dwarehouse.sketchup.com/model.html?id=bf9d922435b48e7fef3a055f85f697f9\n3D
-    tree (low-poly) by ALx: https://3dwarehouse.sketchup.com/model.html?id=5382e261c580987bd5db298325739320\n3D
-    Low Poly Tree by Yaroslav A.: https://3dwarehouse.sketchup.com/model.html?id=u704be8fd-8679-410e-bfeb-9bcbf6512298"
+  m_Text: "Models from 3dwarehouse.sketchup.com:\nOne Tree Hill Obelisk\r by gestaltR,
+    3D tree (low-poly) by ALx, 3D Low Poly Tree by Yaroslav A."
 --- !u!222 &1971568546
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -953,7 +877,7 @@ Canvas:
   m_GameObject: {fileID: 2138971261}
   m_Enabled: 1
   serializedVersion: 2
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 898068913}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -977,10 +901,6 @@ RectTransform:
   m_Children:
   - {fileID: 1597595830}
   - {fileID: 1289302894}
-  - {fileID: 477692393}
-  - {fileID: 1971568544}
-  - {fileID: 1733514042}
-  - {fileID: 613351391}
   - {fileID: 216234556}
   m_Father: {fileID: 0}
   m_RootOrder: 1
