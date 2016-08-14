@@ -44,7 +44,7 @@ public class PickupCollectable : MonoBehaviour {
 						Debug.Log("Flower dropped, awaken trees...");
 						dropTarget.GetComponent<OnFlowerDrop>().FlowerDropped(carryingObject);
 					}
-
+					Camera.main.GetComponent<AudioSource>().Play(); // play pickup sound
 					carryingObject = null;
 				}
 				else

@@ -23,7 +23,7 @@ public class FPMainMenu : MonoBehaviour
             DestroyObject(_backgroundMusic);
 
         // Keep the music playing during the other scenes.
-        DontDestroyOnLoad(_audioClip);
+        //DontDestroyOnLoad(_audioClip);
 
         _loadingImage.SetActive(false);
         _quitConfirmationDialog.SetActive(false);
