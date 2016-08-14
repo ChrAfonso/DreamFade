@@ -72,8 +72,10 @@ public class CameraFilter : MonoBehaviour {
 			float s = p * p * (3 - 2 * p);
 			vignetteFilter.intensity = (1 - p) * fadeStart + p * fadeTarget;
 			vignetteFilter.blur = (1 - p) * fadeStart + p * fadeTarget;
+			Debug.Log("Before: tFade: "+tFade+", fade: " + vignetteFilter.intensity);
 
 			tFade += Time.deltaTime;
+			Debug.Log("After:  tFade: " + tFade + ", fade: " + vignetteFilter.intensity+", time passed: "+Time.deltaTime);
 			if (tFade >= fadeDuration)
 			{
 				vignetteFilter.intensity = fadeTarget;
@@ -82,6 +84,7 @@ public class CameraFilter : MonoBehaviour {
 
 				if (fadeCallback != "")
 				{
+					Debug.Log("Messaging " + fadeCallback);
 					GameController.instance.SendMessage(fadeCallback);
 				}
 			}

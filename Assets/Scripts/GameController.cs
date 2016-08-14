@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
@@ -52,10 +53,14 @@ public class GameController : MonoBehaviour {
 	public bool useSunColorLighing = false;
 	private Vector3 sunAngles;
 
+	private CameraFilter cameraFilterControl;
+
 	// game state
 	private int numAreas = 3;
 	private bool[] areaAwakened;
 	private int currentArea = 0; // starting area
+
+	private bool endOfDayTriggered = false;
 
 	// Use this for initialization
 	void Start () {
@@ -65,6 +70,8 @@ public class GameController : MonoBehaviour {
 		timeOfDay = timeOfDawn;
 
 		sunAngles = sun.transform.eulerAngles;
+
+		cameraFilterControl = Camera.main.GetComponent<CameraFilter>();
 
 		// initial state
 		areaAwakened = new bool[numAreas];
@@ -76,14 +83,14 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		// User Input - DEBUG
+		// User Input - DEBUG -----------------------------------
 		if(Input.GetKey(KeyCode.F9))
 		{
 			hoursPerMinute = 50;
 		}
 		else
 		{
-			hoursPerMinute = 12; // HACK default
+			hoursPerMinute = 6; // HACK default
 		}
 
 		if(Input.GetKeyDown(KeyCode.N))
@@ -93,10 +100,24 @@ public class GameController : MonoBehaviour {
 			return;
 		}
 
+		if(Input.GetKeyDown(KeyCode.F))
+		{
+			cameraFilterControl.FadeOut(3f);
+		}
+		else if (Input.GetKeyDown(KeyCode.G))
+		{
+			cameraFilterControl.FadeIn(3f);
+		}
+
 		// TESTING!
 		if (Input.GetKeyDown(KeyCode.Alpha2)) OnAreaEnter(2);
 		else if (Input.GetKeyDown(KeyCode.Alpha1)) OnAreaEnter(1);
 		else if (Input.GetKeyDown(KeyCode.Alpha0)) OnAreaEnter(0);
+		else if (Input.GetKeyDown(KeyCode.Alpha3)) OnAreaEnter(3);
+		else if (Input.GetKeyDown(KeyCode.Alpha4)) OnAreaEnter(4);
+		else if (Input.GetKeyDown(KeyCode.Alpha5)) OnAreaEnter(5);
+		// User Input - DEBUG -----------------------------------
+
 
 		// Game State
 		timeOfDay += (hoursPerMinute * Time.deltaTime / 60);
@@ -104,7 +125,7 @@ public class GameController : MonoBehaviour {
 
 		UpdateLighting();
 
-		if (timeOfDay > nightTime)
+		if (timeOfDay > nightTime && !endOfDayTriggered)
 		{
 			EndOfDay();
 		}
@@ -114,6 +135,7 @@ public class GameController : MonoBehaviour {
 	{
 		if (useSunColorLighing)
 		{
+			// TODO: Compress this
 			if (timeOfDay < timeOfSunrise)
 			{
 				float factor = (timeOfDay - timeOfDawn) / (timeOfSunrise - timeOfDawn);
@@ -159,12 +181,15 @@ public class GameController : MonoBehaviour {
 		// lock player?
 
 		// TODO FadeOut
-		Camera.main.GetComponent<CameraFilter>().FadeOut(3f, "StartNewDay");
+		cameraFilterControl.FadeOut(2f, "StartNewDay");
+
+		endOfDayTriggered = true;
 	}
 
 	// callback
 	public void StartNewDay()
 	{
+		Debug.Log("StartNewDay");
 		day++;
 		if (day >= days)
 		{
@@ -177,7 +202,9 @@ public class GameController : MonoBehaviour {
 			UpdateDaySettings(currentArea);
 		}
 
-		Camera.main.GetComponent<CameraFilter>().FadeIn(3f, "NewDay");
+		cameraFilterControl.FadeIn(2f, "NewDay");
+
+		endOfDayTriggered = false;
 	}
 
 	// callback
@@ -212,28 +239,23 @@ public class GameController : MonoBehaviour {
 		}
 
 		Debug.Log("Set target saturation: " + targetSaturation);
-		Camera.main.GetComponent<CameraFilter>().SetTargetSaturation(targetSaturation);
+		cameraFilterControl.SetTargetSaturation(targetSaturation);
 
 		float targetNoise = (float)day/(days-1) * 2f; // TODO reduce in awakened areas?
 		Debug.Log("Set target noise: " + targetNoise);
-		Camera.main.GetComponent<CameraFilter>().SetTargetNoise(targetNoise);
-	}
-
-	private bool CheckGameOver()
-	{
-		// TODO check if all areas are awakened
-
-		return false;
+		cameraFilterControl.SetTargetNoise(targetNoise);
 	}
 
 	void GameOver()
 	{
 		// TODO
+		SceneManager.LoadScene("Credits");
 	}
 
 	void Win()
 	{
 		// TODO
 		// play win music
+		SceneManager.LoadScene("Credits");
 	}
 }
