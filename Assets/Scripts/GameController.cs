@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour {
 	private CameraFilter cameraFilterControl;
 
 	// game state
-	private int numAreas = 3;
+	private int numAreas = 6;
 	private bool[] areaAwakened;
 	private int currentArea = 0; // starting area
 

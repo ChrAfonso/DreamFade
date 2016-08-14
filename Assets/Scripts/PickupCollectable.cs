@@ -8,8 +8,6 @@ public class PickupCollectable : MonoBehaviour {
 
 	public GameObject anchor;
 
-	// TEST
-	public GameObject TESTTREE;
 
 	void Start()
 	{
@@ -23,14 +21,8 @@ public class PickupCollectable : MonoBehaviour {
 			{
 				// Pickup
 				carryingObject = objectInRange;
-				objectInRange.transform.parent = anchor.transform;
-
-				// TEST
-				if(TESTTREE != null)
-				{
-					Debug.Log("Start Growing");
-					TESTTREE.SendMessage("StartGrowing");
-				}
+				carryingObject.transform.SetParent(anchor.transform, false);
+				carryingObject.transform.localPosition = Vector3.zero;
 			}
 			else if (carryingObject)
 			{

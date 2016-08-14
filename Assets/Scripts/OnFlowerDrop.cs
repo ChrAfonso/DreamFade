@@ -18,6 +18,9 @@ public class OnFlowerDrop : MonoBehaviour {
 	public void FlowerDropped(GameObject flower)
 	{
 		flower.transform.SetParent(transform, false); // attach to target
+		flower.transform.localPosition = Vector3.zero;
+
+		Component.Destroy(flower.GetComponent<Glow>());
 
 		// notify game controller
 		GameController.instance.AwakenArea(AreaID);
