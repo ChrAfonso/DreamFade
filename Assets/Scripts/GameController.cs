@@ -180,10 +180,22 @@ public class GameController : MonoBehaviour {
 	{
 		// lock player?
 
-		// TODO FadeOut
-		cameraFilterControl.FadeOut(2f, "StartNewDay");
+		// FadeOut
+		cameraFilterControl.FadeOut(4f, "WaitForStartNewDay");
 
 		endOfDayTriggered = true;
+	}
+
+	public void WaitForStartNewDay()
+	{
+		StartCoroutine(asyncWaitForStartNewDay(2));
+	}
+
+	private IEnumerator asyncWaitForStartNewDay(float blackoutTime=2f)
+	{
+		yield return new WaitForSeconds(blackoutTime);
+
+		StartNewDay();
 	}
 
 	// callback
@@ -202,7 +214,7 @@ public class GameController : MonoBehaviour {
 			UpdateDaySettings(currentArea);
 		}
 
-		cameraFilterControl.FadeIn(2f, "NewDay");
+		cameraFilterControl.FadeIn(4f, "NewDay");
 
 		endOfDayTriggered = false;
 	}

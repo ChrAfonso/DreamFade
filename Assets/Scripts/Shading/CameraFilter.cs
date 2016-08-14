@@ -68,7 +68,7 @@ public class CameraFilter : MonoBehaviour {
 
 		if (tFade != -1)
 		{
-			float p = tFade / fadeDuration;
+			float p = Mathf.Pow(tFade / fadeDuration, 2); // Pow: starting slowly
 			float s = p * p * (3 - 2 * p);
 			vignetteFilter.intensity = (1 - p) * fadeStart + p * fadeTarget;
 			vignetteFilter.blur = (1 - p) * fadeStart + p * fadeTarget;
